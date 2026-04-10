@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class PlayerBevahiour : MonoBehaviour
+public class PLayerBehaviour : MonoBehaviour
 {
     #region Variables
     Rigidbody2D rb;

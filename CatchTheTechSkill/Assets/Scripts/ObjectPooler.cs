@@ -1,11 +1,16 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjectPooler : Singleton<ObjectPooler>
 {
-     Dictionary<Poolable,Queue<Poolable>> objectsPool = new Dictionary<Poolable,Queue<Poolable>>();
-     Dictionary<Poolable,GameObject> parents = new Dictionary<Poolable,GameObject>();
+     #region Variables
     
+      Dictionary<Poolable,Queue<Poolable>> objectsPool = new Dictionary<Poolable,Queue<Poolable>>();
+      Dictionary<Poolable,GameObject> parents = new Dictionary<Poolable,GameObject>();
+      
+     #endregion
+     
      #region Methods
 
      public Poolable GetPoolable(Poolable poolable)
@@ -23,6 +28,14 @@ public class ObjectPooler : Singleton<ObjectPooler>
          return temp;
      }
 
+     public void RegisterPoolable(Poolable poolable)
+     {
+         if (!objectsPool.ContainsKey(poolable))
+         {
+             CreatePool(poolable);
+         }
+     }
+
      private void CreatePool(Poolable poolable)
      {
          objectsPool.Add(poolable,new Queue<Poolable>());
@@ -35,43 +48,73 @@ public class ObjectPooler : Singleton<ObjectPooler>
 
      private void RegeneratePool(Poolable poolable)
      {
+
          if (objectsPool.ContainsKey(poolable))
          {
              int PoolSize = poolable.PoolSize;   
+             
              for (int i = 0; i < PoolSize ; i++)
              {
                  Poolable temp= Instantiate(poolable,Vector3.zero,Quaternion.identity,parents[poolable].transform);
+                 temp.PrefabSource = poolable;
                  temp.gameObject.SetActive(false);
                  objectsPool[poolable].Enqueue(temp);
+             }
+         }
+         CheckBounds(poolable);
+     }
+
+     private void CheckBounds(Poolable poolable)
+     {
+         if (objectsPool.ContainsKey(poolable))
+         {
+             if (objectsPool[poolable].Count > poolable.Max_PoolSize &&  poolable.Max_PoolSize > 0)
+             {
+                 int diff=objectsPool[poolable].Count - poolable.Max_PoolSize;
+                 for (int i = 0; i < diff; i++)
+                 {
+                     Poolable temp = objectsPool[poolable].Dequeue();
+                     Destroy(temp.gameObject);
+                 }
              }
          }
      }
 
      public void BackToPool(Poolable poolable)
      {
-         if (objectsPool.ContainsKey(poolable))
+         Poolable key = poolable.PrefabSource;
+         if (objectsPool.ContainsKey(key))
          {
-             GameObject go=poolable.gameObject; 
-             go.SetActive(false);
-             go.transform.SetParent(parents[poolable].transform);
-             objectsPool[poolable].Enqueue(poolable);
+             poolable.gameObject.transform.SetParent(parents[key].transform);
+             poolable.gameObject.transform.position = new Vector3();
+             poolable.gameObject.SetActive(false);
+             poolable.gameObject.SetActive(false);
+             objectsPool[key].Enqueue(poolable);
+             CheckBounds(key);
+         }
+         else
+         {
+             Destroy(poolable.gameObject);
          }
      }
 
      public void DeletePool(Poolable poolable)
      {
-         if(objectsPool.ContainsKey(poolable))
+         Poolable key = poolable.PrefabSource;
+         if(objectsPool.ContainsKey(key))
          {
-             foreach (Poolable tempObj in objectsPool[poolable])
+             foreach (Poolable tempObj in objectsPool[key])
              {
                 Destroy(tempObj.gameObject);
              }
-             objectsPool[poolable].Clear();
-             objectsPool.Remove(poolable);
-             Destroy(parents[poolable]);
-             parents.Remove(poolable);
+             objectsPool[key].Clear();
+             objectsPool.Remove(key);
+             Destroy(parents[key]);
+             parents.Remove(key);
          }
              
      }
+     
      #endregion
+     
 }

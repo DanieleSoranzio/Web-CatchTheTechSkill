@@ -567,6 +567,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6155422957588986519, guid: 6ddb63c09211a274caeb81bdc70034ba, type: 3}
     - target: {fileID: 2065032187161968861, guid: 0f81fd515d4063349bc5ddcbfd84ceff, type: 3}
+      propertyPath: poolable
+      value: 
+      objectReference: {fileID: 6155422957588986519, guid: 6ddb63c09211a274caeb81bdc70034ba, type: 3}
+    - target: {fileID: 2065032187161968861, guid: 0f81fd515d4063349bc5ddcbfd84ceff, type: 3}
       propertyPath: poolables.Array.size
       value: 2
       objectReference: {fileID: 0}

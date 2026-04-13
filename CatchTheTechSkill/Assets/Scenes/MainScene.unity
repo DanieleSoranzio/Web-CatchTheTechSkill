@@ -413,6 +413,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &914030744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 914030746}
+  - component: {fileID: 914030745}
+  m_Layer: 0
+  m_Name: ObjPooler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &914030745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914030744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea0a775087ebce346a62c60f57598ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  persistent: 0
+--- !u!4 &914030746
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914030744}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &144596462081844333
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -517,6 +562,22 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.5294118
       objectReference: {fileID: 0}
+    - target: {fileID: 2065032187161968861, guid: 0f81fd515d4063349bc5ddcbfd84ceff, type: 3}
+      propertyPath: skill
+      value: 
+      objectReference: {fileID: 6155422957588986519, guid: 6ddb63c09211a274caeb81bdc70034ba, type: 3}
+    - target: {fileID: 2065032187161968861, guid: 0f81fd515d4063349bc5ddcbfd84ceff, type: 3}
+      propertyPath: poolables.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2065032187161968861, guid: 0f81fd515d4063349bc5ddcbfd84ceff, type: 3}
+      propertyPath: 'poolables.Array.data[0]'
+      value: 
+      objectReference: {fileID: 6155422957588986519, guid: 6ddb63c09211a274caeb81bdc70034ba, type: 3}
+    - target: {fileID: 2065032187161968861, guid: 0f81fd515d4063349bc5ddcbfd84ceff, type: 3}
+      propertyPath: 'poolables.Array.data[1]'
+      value: 
+      objectReference: {fileID: 6155422957588986519, guid: fb032db4170f3d444aa6537fbafc7b70, type: 3}
     - target: {fileID: 2106948243853394068, guid: 0f81fd515d4063349bc5ddcbfd84ceff, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -578,3 +639,4 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 2215387865060854065}
   - {fileID: 144596462081844333}
+  - {fileID: 914030746}

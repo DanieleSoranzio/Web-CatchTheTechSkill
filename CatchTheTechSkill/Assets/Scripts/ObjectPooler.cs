@@ -12,6 +12,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
      
      #region Methods
 
+     [Tooltip("Will return a request object, will create a new pool if there's none.")]
      public Poolable GetPoolable(Poolable poolable)
      {
          
@@ -26,7 +27,8 @@ public class ObjectPooler : Singleton<ObjectPooler>
          
          return temp;
      }
-
+    
+     [Tooltip("Will register the object to a new pool.")]
      public void RegisterPoolable(Poolable poolable)
      {
          if (!objectsPool.ContainsKey(poolable))
@@ -34,7 +36,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
              CreatePool(poolable);
          }
      }
-
+    
      private void CreatePool(Poolable poolable)
      {
          objectsPool.Add(poolable,new Queue<Poolable>());
@@ -78,7 +80,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
              }
          }
      }
-
+     [Tooltip("Will return the object to his pool. If the bool doesn't exist it will get destroyed.")]
      public void BackToPool(Poolable poolable)
      {
          Poolable key = poolable.PrefabSource;
@@ -103,7 +105,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
          }
         
      }
-
+     [Tooltip("Will delete the pool of the object given type.")]
      public void DeletePool(Poolable poolable)
      {
          Poolable key = poolable.PrefabSource;

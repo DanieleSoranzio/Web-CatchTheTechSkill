@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjectPooler : Singleton<ObjectPooler>
@@ -83,38 +82,41 @@ public class ObjectPooler : Singleton<ObjectPooler>
      public void BackToPool(Poolable poolable)
      {
          Poolable key = poolable.PrefabSource;
-         if (objectsPool.ContainsKey(key))
+         if (key != null)
          {
-             poolable.gameObject.transform.SetParent(parents[key].transform);
-             poolable.gameObject.transform.position = new Vector3();
-             poolable.gameObject.SetActive(false);
-             poolable.gameObject.SetActive(false);
-             objectsPool[key].Enqueue(poolable);
-             CheckBounds(key);
+             if(objectsPool.ContainsKey(key))
+             {
+                 poolable.gameObject.transform.SetParent(parents[key].transform);
+                 poolable.gameObject.transform.position = new Vector3();
+                 poolable.gameObject.SetActive(false);
+                 objectsPool[key].Enqueue(poolable);
+                 CheckBounds(key);
+             }
+             else
+             {
+                 Destroy(poolable.gameObject);
+             }
          }
          else
          {
              Destroy(poolable.gameObject);
          }
+        
      }
 
      public void DeletePool(Poolable poolable)
      {
          Poolable key = poolable.PrefabSource;
-         if(objectsPool.ContainsKey(key))
+         if (key != null)
          {
-             foreach (Poolable tempObj in objectsPool[key])
+             if (objectsPool.ContainsKey(key))
              {
-                Destroy(tempObj.gameObject);
+                 objectsPool[key].Clear();
+                 objectsPool.Remove(key);
+                 Destroy(parents[key].gameObject);
+                 parents.Remove(key);
              }
-             objectsPool[key].Clear();
-             objectsPool.Remove(key);
-             Destroy(parents[key]);
-             parents.Remove(key);
          }
-             
      }
-     
      #endregion
-     
 }

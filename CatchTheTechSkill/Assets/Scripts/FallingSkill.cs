@@ -1,14 +1,12 @@
-using System;
 using UnityEngine;
 
 public class FallingSkill : Poolable
 {
-    //Serializable
-    [SerializeField] private float movementSpeed=125;
     
     //Data
     bool isCatchable;
     SkillsData data;
+    private float movementSpeed=125;
     
     //Components
     SpriteRenderer spriteRenderer;
@@ -33,16 +31,16 @@ public class FallingSkill : Poolable
         {
             ReturnToPool();
             if(isCatchable)
-                GameManager.Instance.OnSkillFelt?.Invoke();
+                EventManager.OnSkillFelt?.Invoke();
         }
 
         if (other.gameObject.CompareTag(("Player")))
         {
             ReturnToPool();
             if(isCatchable)
-                GameManager.Instance.OnSkillCatch?.Invoke();
+                EventManager.OnSkillCatch?.Invoke();
             else
-                GameManager.Instance.OnSkillFelt?.Invoke();
+                EventManager.OnSkillFelt?.Invoke();
         }
     }
     
@@ -51,6 +49,11 @@ public class FallingSkill : Poolable
     {
         spriteRenderer.sprite = newData.sprite;
         isCatchable = newData.isCatchable;
+    }
+
+    public void SetMovementSpeed(float movementSpeed)
+    {
+        this.movementSpeed = movementSpeed;
     }
 
     #endregion

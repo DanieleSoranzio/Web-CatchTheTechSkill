@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52ea0521a23e96e40959739fd4c3acb2, type: 3}
-  m_Name: UnitySkill
+  m_Name: UnrealSkill
   m_EditorClassIdentifier: 
-  <sprite>k__BackingField: {fileID: 3635997345477952357, guid: 2dc2f4a11b3abea48bf755db6ee9d3ef, type: 3}
+  <sprite>k__BackingField: {fileID: 1306359581093310781, guid: 9b41ed582795f5a44a743fe635272e11, type: 3}
   <isCatchable>k__BackingField: 1

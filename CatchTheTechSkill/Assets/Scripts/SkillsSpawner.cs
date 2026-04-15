@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// The skill spawner handle everything behind the skills and use the object pooler to get the objects.
+/// </summary>
 public class SkillsSpawner : MonoBehaviour
 {
     #region Variables
@@ -19,11 +22,17 @@ public class SkillsSpawner : MonoBehaviour
     [Space(10), Header("Stats")] 
     [Tooltip("Chance to spawn a catchable skill, if it wont it will spawn an uncatchable.")]
     [Range(0, 100),SerializeField] private int catchSkillsChanceInt;
+    [SerializeField] private float spawnTimeRate=3f;
+    [SerializeField] private float minSpawnTimeRate;
+    [SerializeField] private float skillMovementSpeed;
+    
+    /// <summary>
+    /// Private Variables
+    /// </summary>
     private float uncatchSkillsChance;
     private float catchSkillsChance;
     private float rangeOfSpawn;
-    [SerializeField] private float spawnTimeRate=3f;
-    [SerializeField] private float minSpawnTimeRate;
+
     
     #endregion
     
@@ -33,12 +42,12 @@ public class SkillsSpawner : MonoBehaviour
     {
         skill.Register();
         rangeOfSpawn=spawnerObject.transform.localScale.x/2;
+        catchSkillsChance = catchSkillsChanceInt / 100f;
+        uncatchSkillsChance = 1-catchSkillsChance;
     }
 
     void Start()
     {
-        catchSkillsChance = catchSkillsChanceInt / 100f;
-        uncatchSkillsChance = 1-catchSkillsChance;
         StartCoroutine(SpawnSkill());
     }
     
@@ -50,6 +59,7 @@ public class SkillsSpawner : MonoBehaviour
     {
         float spawntimeChance = 0;
         Poolable Obj;
+        float randSpawn;
         while (true)
         {
             float timer = 0f;
@@ -65,7 +75,10 @@ public class SkillsSpawner : MonoBehaviour
                 spawnedObj.gameObject.SetActive(true);
                 chosenList=GetRandomDecimalNumber(1f,0f,true)<catchSkillsChance ? catchableSkills : uncatchableSkills;
                 spawnedObj.SetData(chosenList[Random.Range(0, chosenList.Count)]);
-                spawnedObj.gameObject.transform.position = new Vector3(Random.Range(-rangeOfSpawn,rangeOfSpawn),spawnerObject.transform.position.y,spawnerObject.transform.position.z);
+                spawnedObj.SetMovementSpeed(skillMovementSpeed);
+                randSpawn = Random.Range(-rangeOfSpawn, rangeOfSpawn);
+                spawnedObj.gameObject.transform.position = new Vector3(randSpawn,spawnerObject.transform.position.y,spawnerObject.transform.position.z);
+                spawnedObj.transform.rotation = Quaternion.Euler(0f, 0f, Random.Range(-45f, 45));
             }
             yield return null;
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {   
     #region Data
-
+    
     #region Local
     static T instance;
     #endregion

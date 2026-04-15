@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class FallingSkill : Poolable
@@ -14,8 +15,8 @@ public class FallingSkill : Poolable
     Rigidbody2D rb;
     
     #region Mono
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public void  Start()
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -31,21 +32,25 @@ public class FallingSkill : Poolable
         if (other.gameObject.CompareTag("Finish"))
         {
             ReturnToPool();
-            GameManager.Instance.OnSkillFelt?.Invoke();
+            if(isCatchable)
+                GameManager.Instance.OnSkillFelt?.Invoke();
         }
 
         if (other.gameObject.CompareTag(("Player")))
         {
             ReturnToPool();
-            GameManager.Instance.OnSkillCatch?.Invoke();
+            if(isCatchable)
+                GameManager.Instance.OnSkillCatch?.Invoke();
+            else
+                GameManager.Instance.OnSkillFelt?.Invoke();
         }
     }
     
     [Tooltip("Set a new skills data to the object, changing sprite and catchable boolean.")]
-    public void SetData(SkillsData data)
+    public void SetData(SkillsData newData)
     {
-        spriteRenderer.sprite = data.sprite;
-        isCatchable = data.isCatchable;
+        spriteRenderer.sprite = newData.sprite;
+        isCatchable = newData.isCatchable;
     }
 
     #endregion

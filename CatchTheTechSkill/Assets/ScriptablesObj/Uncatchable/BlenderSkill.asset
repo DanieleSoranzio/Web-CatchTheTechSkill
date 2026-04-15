@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52ea0521a23e96e40959739fd4c3acb2, type: 3}
   m_Name: BlenderSkill
   m_EditorClassIdentifier: 
-  isCatchable: 0
+  <sprite>k__BackingField: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  <isCatchable>k__BackingField: 0

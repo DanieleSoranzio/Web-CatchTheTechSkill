@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics.Geometry;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SkillsSpawner : MonoBehaviour
 {
@@ -9,16 +10,30 @@ public class SkillsSpawner : MonoBehaviour
     [Header("Data")]
     [SerializeField] private List<SkillsData> catchableSkills;
     [SerializeField] private List<SkillsData> uncatchableSkills;
+    private List<SkillsData> chosenList;
+    [SerializeField] private FallingSkill skill;
+
+    [Space(10), Header("Setup")] 
+    [SerializeField] private GameObject spawnerObject;
     
-    [Header("Setup")]
+    [Space(10), Header("Stats")] 
     [Tooltip("Chance to spawn a catchable skill, if it wont it will spawn an uncatchable.")]
     [Range(0, 100),SerializeField] private int catchSkillsChanceInt;
     private float uncatchSkillsChance;
     private float catchSkillsChance;
+    private float rangeOfSpawn;
+    [SerializeField] private float spawnTimeRate=3f;
+    [SerializeField] private float minSpawnTimeRate;
     
     #endregion
     
     #region Mono
+
+    private void Awake()
+    {
+        skill.Register();
+        rangeOfSpawn=spawnerObject.transform.localScale.x/2;
+    }
 
     void Start()
     {
@@ -33,15 +48,38 @@ public class SkillsSpawner : MonoBehaviour
     
     IEnumerator SpawnSkill()
     {
-        yield return null;
-        float x = (Random.Range(0f, 1f));
+        float spawntimeChance = 0;
+        Poolable Obj;
+        while (true)
+        {
+            float timer = 0f;
+            while (timer<spawntimeChance)
+            {
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            spawntimeChance = GetRandomDecimalNumber(spawnTimeRate,minSpawnTimeRate);
+            Obj = ObjectPooler.Instance.GetPoolable(skill); 
+            if (Obj is FallingSkill spawnedObj)
+            {
+                spawnedObj.gameObject.SetActive(true);
+                chosenList=GetRandomDecimalNumber(1f,0f,true)<catchSkillsChance ? catchableSkills : uncatchableSkills;
+                spawnedObj.SetData(chosenList[Random.Range(0, chosenList.Count)]);
+                spawnedObj.gameObject.transform.position = new Vector3(Random.Range(-rangeOfSpawn,rangeOfSpawn),spawnerObject.transform.position.y,spawnerObject.transform.position.z);
+            }
+            yield return null;
+        }
+    }
+
+    [Tooltip("Return a random  number in between min and max Amount.")]
+    private float GetRandomDecimalNumber(float maxAmount=1f,float minAmount=0f,bool isDecimal=true)
+    {
+        float x = (Random.Range(minAmount, maxAmount));
         x *= 100;
         x = Mathf.Floor(x);
-        x /= 100;
-        //returning to times
-        Debug.Log(x);
-        
-        
+        if (isDecimal)
+            x /= 100;
+        return x;
     }
     #endregion
 }

@@ -10,7 +10,7 @@ public static class Extensions
 
     private static IEnumerator ColorRoutine(SpriteRenderer sr, Color targetColor, float duration)
     {
-        Color startColor = sr.color;
+        Color startColor = Color.white;
         float time = 0f;
 
         while (time < duration)
@@ -41,7 +41,7 @@ public static class Extensions
 
     private static IEnumerator ScaleRoutine(Transform tr, Vector3 targetScale, float duration)
     {
-        Vector3 startScale = tr.localScale;
+        Vector3 startScale = new Vector3(2f,2f,2f);
         float time = 0f;
 
         while (time < duration)

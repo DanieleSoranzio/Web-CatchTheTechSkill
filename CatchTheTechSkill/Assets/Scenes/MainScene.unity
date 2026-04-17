@@ -555,9 +555,12 @@ MonoBehaviour:
   skill: {fileID: 6155422957588986519, guid: 6ddb63c09211a274caeb81bdc70034ba, type: 3}
   spawnerObject: {fileID: 1738527344}
   catchSkillsChanceInt: 80
+  minCatchSkillsChanceInt: 65
   spawnTimeRate: 2
   minSpawnTimeRate: 0.6
   skillMovementSpeed: 150
+  maxSkillMovementSpeed: 200
+  EndGameTimer: 30
 --- !u!4 &763125199 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2106948243853394068, guid: 0f81fd515d4063349bc5ddcbfd84ceff, type: 3}

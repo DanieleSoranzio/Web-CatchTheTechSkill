@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class FallingSkill : Poolable
@@ -6,7 +7,7 @@ public class FallingSkill : Poolable
     //Data
     bool isCatchable;
     SkillsData data;
-    private float movementSpeed=125;
+    private float movementSpeed;
     
     //Components
     SpriteRenderer spriteRenderer;
@@ -19,7 +20,17 @@ public class FallingSkill : Poolable
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
-    
+
+    private void OnEnable()
+    {
+        EventManager.OnGameOver += GetBackToPool;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnGameOver -= GetBackToPool;
+    }
+
     private void FixedUpdate()
     {
         rb.linearVelocity=new Vector2(0,-1*movementSpeed*Time.deltaTime);
@@ -43,6 +54,9 @@ public class FallingSkill : Poolable
                 EventManager.OnSkillFelt?.Invoke();
         }
     }
+    #endregion
+    
+    #region Methods
     
     [Tooltip("Set a new skills data to the object, changing sprite and catchable boolean.")]
     public void SetData(SkillsData newData)
@@ -54,6 +68,11 @@ public class FallingSkill : Poolable
     public void SetMovementSpeed(float movementSpeed)
     {
         this.movementSpeed = movementSpeed;
+    }
+
+    private void GetBackToPool()
+    {
+        ReturnToPool();
     }
 
     #endregion

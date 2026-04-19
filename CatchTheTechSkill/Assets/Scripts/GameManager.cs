@@ -5,8 +5,7 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     private bool isGameStarted=false;
-    [SerializeField] private UIHandler uiHandler;
-
+    
     private void OnEnable()
     {
          EventManager.OnGameOver += OnGameOver;

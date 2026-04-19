@@ -8,6 +8,7 @@ public class FallingSkill : Poolable
     bool isCatchable;
     SkillsData data;
     private float movementSpeed;
+    [SerializeField] private LostSkillParticle lostSkillParticles;
     
     //Components
     SpriteRenderer spriteRenderer;
@@ -40,8 +41,19 @@ public class FallingSkill : Poolable
     {
         if (other.gameObject.CompareTag("Finish"))
         {
-            if(isCatchable)
+            if (isCatchable)
+            {
+
+                Poolable obj = ObjectPooler.Instance.GetPoolable(lostSkillParticles);
+                if (obj is LostSkillParticle particle)
+                {
+                    particle.particlePos = transform.position;
+                    particle.gameObject.SetActive(true);
+                    particle.PlayParticleEffect();
+                }
                 EventManager.OnSkillFelt?.Invoke();
+            }
+               
         }
 
         if (other.gameObject.CompareTag(("Player")))

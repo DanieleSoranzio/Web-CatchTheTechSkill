@@ -7,10 +7,20 @@ public class ObjectPooler : Singleton<ObjectPooler>
     
       Dictionary<Poolable,Queue<Poolable>> objectsPool = new Dictionary<Poolable,Queue<Poolable>>();
       Dictionary<Poolable,GameObject> parents = new Dictionary<Poolable,GameObject>();
+      [SerializeField] List<Poolable> PoolablesToRegister = new List<Poolable>();
       
      #endregion
      
      #region Methods
+
+     protected override void Awake()
+     {
+         base.Awake();
+         foreach (Poolable poolable in PoolablesToRegister)
+         {
+             RegisterPoolable(poolable);
+         }
+     }
 
      [Tooltip("Will return a request object, will create a new pool if there's none.")]
      public Poolable GetPoolable(Poolable poolable)

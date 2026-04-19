@@ -72,7 +72,7 @@ public static class Extensions
     }
     
     public static void AnimateAlpha(
-        this TMP_Text tmp,
+        this CanvasGroup tmp,
         MonoBehaviour runner,
         float targetAlpha,
         float duration,
@@ -83,7 +83,7 @@ public static class Extensions
     }
 
     private static IEnumerator AlphaRoutineTMP(
-        TMP_Text tmp,
+        CanvasGroup tmp,
         float targetAlpha,
         float duration,
         bool pingPong,

@@ -62,11 +62,6 @@ public class SkillsSpawner : MonoBehaviour
             DecreaseSpawnSkillsRate();
             IncreaseSkillMvmSpeed();
         }
-        else
-        {
-            InitializateStats();
-        }
-        
     }
 
     private void OnEnable()
@@ -143,10 +138,10 @@ public class SkillsSpawner : MonoBehaviour
     {
          float speed = Mathf.Abs((0.4f - minSpawnTimeRate)) / EndGameTimer;
          currentMinSpawnTimeRate -= speed * Time.deltaTime;
-         currentMinSpawnTimeRate = Mathf.Clamp(currentMinSpawnTimeRate, 0.4f, minSpawnTimeRate);
+         currentMinSpawnTimeRate = Mathf.Clamp(currentMinSpawnTimeRate, 0.3f, minSpawnTimeRate);
          float speed2 = Mathf.Abs((1f - spawnTimeRate)) / EndGameTimer;
          currentMaxSpawnTimeRate -= speed2 * Time.deltaTime;
-         currentMaxSpawnTimeRate = Mathf.Clamp(currentMaxSpawnTimeRate, 1f, spawnTimeRate);
+         currentMaxSpawnTimeRate = Mathf.Clamp(currentMaxSpawnTimeRate, 0.8f, spawnTimeRate);
     }
     private void IncreaseSkillMvmSpeed()
     {
@@ -154,7 +149,6 @@ public class SkillsSpawner : MonoBehaviour
         currentSkillMvmSpeed += speed * Time.deltaTime;
         currentSkillMvmSpeed = Mathf.Clamp(currentSkillMvmSpeed, skillMovementSpeed, maxSkillMovementSpeed);
     }
-    
     
     private void OnGameOver()
     {
@@ -172,8 +166,6 @@ public class SkillsSpawner : MonoBehaviour
             x /= 100;
         return x;
     }
-    
-    
     
     #endregion
 }

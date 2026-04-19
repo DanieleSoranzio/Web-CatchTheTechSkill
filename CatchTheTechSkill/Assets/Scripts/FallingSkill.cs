@@ -40,19 +40,18 @@ public class FallingSkill : Poolable
     {
         if (other.gameObject.CompareTag("Finish"))
         {
-            ReturnToPool();
             if(isCatchable)
                 EventManager.OnSkillFelt?.Invoke();
         }
 
         if (other.gameObject.CompareTag(("Player")))
         {
-            ReturnToPool();
             if(isCatchable)
                 EventManager.OnSkillCatch?.Invoke();
             else
                 EventManager.OnSkillFelt?.Invoke();
         }
+        ReturnToPool();
     }
     #endregion
     

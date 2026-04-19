@@ -5,61 +5,42 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     private bool isGameStarted=false;
+    [SerializeField] private UIHandler uiHandler;
 
     private void OnEnable()
     {
-         EventManager.OnSkillCatch += PlayerLossSkill; 
-         EventManager.OnSkillCatch += OnSkillCatched;
          EventManager.OnGameOver += OnGameOver;
     }
 
     private void OnDisable()
     {
-        EventManager.OnSkillFelt -= PlayerLossSkill;
-        EventManager.OnSkillCatch -= OnSkillCatched;
         EventManager.OnGameOver -= OnGameOver;
     }
 
-
-    private void PlayerLossSkill()
+    private IEnumerator Initialize(float delay)
     {
-        //Debug.Log("PlayerLossSkill");
+        yield return new WaitForSeconds(delay);
+        EventManager.Initialize?.Invoke();
     }
-
-    private void OnSkillCatched()
+    
+    public void GameStarted()
     {
-        //Debug.Log("OnSkillCatched");
-    }
-
-    private IEnumerator RestartGame()
-    {
-        yield return new WaitForSeconds(5f); 
-        Debug.Log("Game ReStarted");
         isGameStarted = true;
         EventManager.OnGameStart?.Invoke();
-        yield return null;
     }
-    
     private void OnGameOver()
     {
-        StartCoroutine(RestartGame());
+        isGameStarted = false;
+        StartCoroutine(Initialize(2f));
     }
-    
+
     private void OnApplicationFocus(bool hasFocus)
     {
-        if (!isGameStarted & hasFocus)
-        {
-            isGameStarted = true;
-            EventManager.OnGameStart?.Invoke();
-            Debug.Log("Game Started");
-        }
-           
         PauseGame(hasFocus);
     }
 
     private void PauseGame(bool focus)
     {
-
         Time.timeScale = focus ? 1 : 0;
     }
 }

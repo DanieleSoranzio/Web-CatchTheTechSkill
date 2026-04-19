@@ -33,6 +33,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnEnable()
     {
+        EventManager.Initialize += Initialize;
         EventManager.OnSkillCatch += OnSkillCatched;
         EventManager.OnSkillFelt += OnLifeLost; 
         EventManager.OnGameStart += OnGameStart;
@@ -41,12 +42,15 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnDisable()
     {
+        EventManager.Initialize-= Initialize;
         EventManager.OnSkillCatch -= OnSkillCatched;
         EventManager.OnSkillFelt -= OnLifeLost;
         EventManager.OnGameStart -= OnGameStart;
         EventManager.OnGameOver -= OnGameOver; 
     }
-    
+
+
+
     #endregion
     
     #region Player_Controller
@@ -59,11 +63,14 @@ public class PlayerBehaviour : MonoBehaviour
             if(horizontal!=0)
                 sr.flipX= horizontal < 0f? true:false;
         }
-        
     }
     
     #endregion
-    
+    private void Initialize()
+    {
+        lives=3;
+        transform.position = startPos;
+    }
     private void OnSkillCatched()
     {
         sr.AnimateColor(this,Color.green,0.15f);
@@ -84,12 +91,12 @@ public class PlayerBehaviour : MonoBehaviour
     private void OnGameOver()
     {
         canMove = false;
+        horizontal=0;
     }
     private void OnGameStart()
     {
-        lives = 3;
+        horizontal=0;
         canMove = true;
-        transform.position=startPos;
     }
    
 }

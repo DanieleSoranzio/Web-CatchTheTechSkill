@@ -9,6 +9,7 @@ public class FallingSkill : Poolable
     SkillsData data;
     private float movementSpeed;
     [SerializeField] private LostSkillParticle lostSkillParticles;
+    [SerializeField] private LostSkillParticle ExplosionParticles;
     
     //Components
     SpriteRenderer spriteRenderer;
@@ -52,6 +53,16 @@ public class FallingSkill : Poolable
                     particle.PlayParticleEffect();
                 }
                 EventManager.OnSkillFelt?.Invoke();
+            }
+            else
+            {
+                Poolable obj = ObjectPooler.Instance.GetPoolable(ExplosionParticles);
+                if (obj is LostSkillParticle particle)
+                {
+                    particle.particlePos = transform.position;
+                    particle.gameObject.SetActive(true);
+                    particle.PlayParticleEffect();
+                }
             }
                
         }

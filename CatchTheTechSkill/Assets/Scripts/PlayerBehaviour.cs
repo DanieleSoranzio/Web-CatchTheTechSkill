@@ -1,26 +1,35 @@
 
 using System;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 
 public class PlayerBehaviour : MonoBehaviour
 {
     #region Variables
     
+    [SerializeField] private float movementSpeed;
+    [SerializeField] private TextMeshPro comboText;
+    [SerializeField] private AudioClip catchAudio;
+    [SerializeField] private AudioClip missAudio;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-    [SerializeField] private float movementSpeed;
     private int lives=3;
     private float horizontal;
     private bool canMove=false;
     private Vector3 startPos;
+    private int combo;
     
     #endregion
    
     #region Mono
     void Awake()
     {
+        //comboText=GetComponentInChildren<TextMeshPro>();
+        comboText.gameObject.SetActive(false);
         rb=GetComponent<Rigidbody2D>();
         sr=GetComponent<SpriteRenderer>();
         startPos=transform.position;
@@ -48,9 +57,7 @@ public class PlayerBehaviour : MonoBehaviour
         EventManager.OnGameStart -= OnGameStart;
         EventManager.OnGameOver -= OnGameOver; 
     }
-
-
-
+    
     #endregion
     
     #region Player_Controller
@@ -66,22 +73,33 @@ public class PlayerBehaviour : MonoBehaviour
     }
     
     #endregion
+    #region Methods
     private void Initialize()
     {
         lives=3;
+        combo = 0;
         transform.position = startPos;
+        comboText.gameObject.SetActive(false);
     }
     private void OnSkillCatched()
     {
+        combo++;
+        if (combo % 2 == 0)
+        {
+            StartCoroutine(ShowCombo());
+        }
         sr.AnimateColor(this,Color.green,0.15f);
         transform.AnimateScale(this,transform.localScale*1.2f,0.15f);
+        AudioManager.Instance.PlaySFX(catchAudio,0.3f,Random.Range(0.8f,1f));
     }
 
     private void OnLifeLost()
     {
+        combo = 0;
         sr.AnimateColor(this,Color.red,0.15f);
         transform.AnimateScale(this,transform.localScale*0.8f,0.15f);
         lives--;
+        AudioManager.Instance.PlaySFX(missAudio,0.2f,Random.Range(0.8f,1f));
         if (lives == 0)
         {
             EventManager.OnGameOver?.Invoke();
@@ -98,5 +116,19 @@ public class PlayerBehaviour : MonoBehaviour
         horizontal=0;
         canMove = true;
     }
-   
+
+    private IEnumerator ShowCombo()
+    {
+        comboText.text= "X"+combo.ToString() + " combo!";
+        comboText.gameObject.SetActive(true);
+        comboText.transform.Shake(this,5f,0.6f);
+        float tempScale = combo * 0.1f;
+        tempScale += 1;
+        tempScale = Mathf.Clamp(tempScale,0f,2f);
+        comboText.transform.AnimateScale(this,comboText.transform.localScale*tempScale,0.3f,false);
+        yield return new WaitForSeconds(0.6f);
+        comboText.gameObject.SetActive(false);
+        comboText.transform.localScale=new Vector3(1f,1f,0);
+    }
+   #endregion
 }

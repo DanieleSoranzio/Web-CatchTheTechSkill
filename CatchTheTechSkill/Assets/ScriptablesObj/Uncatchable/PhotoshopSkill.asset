@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52ea0521a23e96e40959739fd4c3acb2, type: 3}
+  m_Name: PhotoshopSkill
+  m_EditorClassIdentifier: 
+  <sprite>k__BackingField: {fileID: 208344247284703899, guid: 74676a0bb6310aa4fb4a89c16ceb3be0, type: 3}
+  <isCatchable>k__BackingField: 0

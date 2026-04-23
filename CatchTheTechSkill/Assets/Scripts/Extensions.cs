@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 
 public static class Extensions
 {
@@ -123,7 +124,14 @@ public static class Extensions
         float duration,
         bool pingPong = false)
     {
-        runner.StartCoroutine(PositionRoutine(tr, targetPosition, duration, pingPong));
+        if (tr is RectTransform rt)
+        {
+            runner.StartCoroutine(UIPositionRoutine(rt, targetPosition, duration, pingPong));
+        }
+        else
+        {
+            runner.StartCoroutine(PositionRoutine(tr, targetPosition, duration, pingPong));
+        }
     }
 
     private static IEnumerator PositionRoutine(
@@ -160,5 +168,66 @@ public static class Extensions
         }
 
         tr.position = startPosition;
+    }
+    
+    private static IEnumerator UIPositionRoutine(
+        RectTransform rt,
+        Vector2 targetPosition,
+        float duration,
+        bool pingPong)
+    {
+        Vector2 startPosition = rt.anchoredPosition;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = time / duration;
+            rt.anchoredPosition = Vector2.Lerp(startPosition, targetPosition, t);
+            yield return null;
+        }
+
+        if (!pingPong)
+        {
+            rt.anchoredPosition = targetPosition;
+            yield break;
+        }
+
+        time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = time / duration;
+            rt.anchoredPosition = Vector2.Lerp(targetPosition, startPosition, t);
+            yield return null;
+        }
+
+        rt.anchoredPosition = startPosition;
+    }
+    public static void Shake(
+        this Transform tmp,
+        MonoBehaviour runner,
+        float magnitude,
+        float duration)
+    {
+        runner.StartCoroutine(ShakeRoutine(tmp, magnitude, duration));
+    }
+
+    private static IEnumerator ShakeRoutine(Transform tr, float magnitude, float duration)
+    {
+        Quaternion originalRot = tr.localRotation;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float z = Random.Range(-1f, 1f) * magnitude;
+            tr.localRotation = originalRot * Quaternion.Euler(0f, 0f, z);
+            yield return null;
+        }
+
+        tr.localRotation = originalRot;
+
     }
 }

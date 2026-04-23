@@ -42,24 +42,7 @@ public class CameraSizeBehaviour : MonoBehaviour
     }
     public void Shake()
     {
-        StartCoroutine(ShakeRoutine());
-    }
-
-    private IEnumerator ShakeRoutine()
-    {
-        Vector3 originalPos = transform.localPosition;
-        float time = 0f;
-
-        while (time < duration)
-        {
-            time += Time.deltaTime;
-            float x = Random.Range(-1f, 1f) * magnitude;
-            float y = Random.Range(-1f, 1f) * magnitude;
-            transform.localPosition = new Vector3(originalPos.x + x, originalPos.y + y, originalPos.z);
-            yield return null;
-        }
-
-        transform.localPosition = originalPos;
+        transform.Shake(this,magnitude,duration);
     }
     #endregion
 }

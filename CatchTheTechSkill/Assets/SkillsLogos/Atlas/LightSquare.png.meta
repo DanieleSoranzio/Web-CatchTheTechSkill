@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 32
+    maxTextureSize: 2048
     resizeAlgorithm: 1
     textureFormat: 4
     textureCompression: 1
@@ -152,14 +152,14 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Square
+      name: LightSquare
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
         height: 32
-      alignment: 9
+      alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
@@ -167,8 +167,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d009a6b596c7d760800000000000000
-      internalID: 7482667652216324306
+      spriteID: 278cc71f49a29ae4a9e9d0e4aa460e4c
+      internalID: 838527750
       vertices: []
       indices: 
       edges: []
@@ -191,7 +191,70 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Square: 7482667652216324306
+      LightSquare: 838527750
+      LightSquare_0: -1232929200
+      LightSquare_1: -72858092
+      LightSquare_10: 1717623909
+      LightSquare_11: 1557846395
+      LightSquare_12: 1532685426
+      LightSquare_13: -1038840277
+      LightSquare_14: 1878013904
+      LightSquare_15: -1856798030
+      LightSquare_16: -1221080385
+      LightSquare_17: -1461829469
+      LightSquare_18: 1033199368
+      LightSquare_19: -559622880
+      LightSquare_2: 1437228421
+      LightSquare_20: 955725953
+      LightSquare_21: -797142763
+      LightSquare_22: -963843699
+      LightSquare_23: 1559268989
+      LightSquare_24: -2029691566
+      LightSquare_25: 852270034
+      LightSquare_26: 1363905290
+      LightSquare_27: 55008221
+      LightSquare_28: -1452555299
+      LightSquare_29: 688914893
+      LightSquare_3: 961391325
+      LightSquare_30: 946216523
+      LightSquare_31: -1940485421
+      LightSquare_32: -72874007
+      LightSquare_33: -1116518129
+      LightSquare_34: -1849326056
+      LightSquare_36: 511005195
+      LightSquare_37: 2144112258
+      LightSquare_38: -1755730773
+      LightSquare_39: 23088706
+      LightSquare_4: 1844260109
+      LightSquare_40: 1021046526
+      LightSquare_41: -677825173
+      LightSquare_42: -1535291094
+      LightSquare_43: 1337559550
+      LightSquare_44: 1646335164
+      LightSquare_45: 1863862238
+      LightSquare_46: -1567706293
+      LightSquare_47: 1605286815
+      LightSquare_48: 182876118
+      LightSquare_49: -1586873533
+      LightSquare_5: 1100782075
+      LightSquare_50: 722048588
+      LightSquare_51: 645551639
+      LightSquare_52: -986753432
+      LightSquare_53: -358831991
+      LightSquare_54: -1554126332
+      LightSquare_55: 434598739
+      LightSquare_56: -123311125
+      LightSquare_57: -191316554
+      LightSquare_58: -1605463360
+      LightSquare_59: -488252913
+      LightSquare_6: -483550019
+      LightSquare_60: -680249347
+      LightSquare_61: 1326473294
+      LightSquare_62: -1233826273
+      LightSquare_63: 539900578
+      LightSquare_7: 1082523740
+      LightSquare_8: 1737592736
+      LightSquare_9: 910742696
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,15 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Image = UnityEngine.UI.Image;
 
 public class GameManager : Singleton<GameManager>
 {
     private bool isGameStarted=false;
+    private bool isAudio=true;
+    [SerializeField] private Image audioImage;
+    [SerializeField] private Sprite audioOffImage;
+    [SerializeField] private Sprite audioOnImage;
     
     private void OnEnable()
     {
@@ -35,7 +40,17 @@ public class GameManager : Singleton<GameManager>
 
     private void OnApplicationFocus(bool hasFocus)
     {
-        PauseGame(hasFocus);
+        if (isGameStarted)
+        {
+            PauseGame(hasFocus);
+        }
+    }
+
+    public void OnAudioButton()
+    {
+        isAudio=!isAudio;
+        audioImage.sprite = isAudio?audioOnImage:audioOffImage;
+        AudioManager.Instance.ToggleMute();
     }
 
     private void PauseGame(bool focus)

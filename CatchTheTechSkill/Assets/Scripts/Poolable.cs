@@ -4,7 +4,7 @@ public class Poolable : MonoBehaviour
 {
     #region Variables
     
-    [SerializeField,Range(10f,100f)] public int PoolSize=10;
+    [SerializeField,Range(1f,100f)] public int PoolSize=10;
     [SerializeField,Range(0f,100f)] public int Max_PoolSize=50;
     public Poolable PrefabSource { get; internal set; }
     

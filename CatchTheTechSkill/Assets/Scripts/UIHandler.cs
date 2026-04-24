@@ -58,7 +58,7 @@ public class UIHandler : MonoBehaviour
         livesImage.enabled = false;
         textCanvasGroup.gameObject.SetActive(true);
         playerScoreText.rectTransform.AnimatePosition(this,startPos,0.1f);
-        playerScoreText.rectTransform.AnimateScale(this,startScale,0.1f,false);
+        playerScoreText.rectTransform.AnimateScale(this,playerScoreText.rectTransform.localScale,startScale,0.1f,false);
         textCanvasGroup.alpha = 1f;
         textCanvasGroup.AnimateAlpha(this,0f,1f,true,true);
         playerScore = 0;
@@ -79,18 +79,18 @@ public class UIHandler : MonoBehaviour
     private void OnGameLost()
     {
         playerScoreText.rectTransform.AnimatePosition(this,Vector3.zero,1f,false);
-        playerScoreText.rectTransform.AnimateScale(this,startScale*2f,1f,false);
+        playerScoreText.rectTransform.AnimateScale(this,startScale,startScale*2f,1f,false);
     }
     private void OnSkillFelt()
     {
-        livesImage.rectTransform.AnimateScale(this,livesImage.rectTransform.localScale * 0.8f,0.15f);
+        livesImage.rectTransform.AnimateScale(this,livesImage.rectTransform.localScale,livesImage.rectTransform.localScale * 0.8f,0.15f);
         playerLives--;
         playerLivesText.text = playerLives.ToString();
     }
 
     private void OnSkillCatch()
     {
-        playerScoreText.rectTransform.AnimateScale(this,playerScoreText.rectTransform.localScale * 1.2f,0.15f);
+        playerScoreText.rectTransform.AnimateScale(this,playerScoreText.rectTransform.localScale,playerScoreText.rectTransform.localScale * 1.2f,0.15f);
         playerScore++;
         playerScoreText.text=playerScore.ToString("D4");
     }

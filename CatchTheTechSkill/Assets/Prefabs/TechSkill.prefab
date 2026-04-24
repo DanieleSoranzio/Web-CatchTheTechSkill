@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89f118337d4fcf478064704b1aaf269, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolSize: 10
-  Max_PoolSize: 10
+  PoolSize: 15
+  Max_PoolSize: 0
   lostSkillParticles: {fileID: -4644554313401897326, guid: 768f8a0ed1e2ca04c970619504132084, type: 3}
   ExplosionParticles: {fileID: -185128184263528413, guid: 84b10997c0908e4408a45198d71a3bd5, type: 3}
 --- !u!58 &6630184191601758862

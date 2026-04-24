@@ -36,14 +36,14 @@ public static class Extensions
         sr.color = startColor;
     }
 
-    public static void AnimateScale(this Transform tr, MonoBehaviour runner, Vector3 targetScale, float duration,bool loop=true)
+    public static void AnimateScale(this Transform tr, MonoBehaviour runner, Vector3 startScale,Vector3 targetScale, float duration,bool loop=true)
     {
-        runner.StartCoroutine(ScaleRoutine(tr, targetScale, duration,loop));
+        runner.StartCoroutine(ScaleRoutine(tr, startScale,targetScale, duration,loop));
     }
 
-    private static IEnumerator ScaleRoutine(Transform tr, Vector3 targetScale, float duration, bool loop=true)
+    private static IEnumerator ScaleRoutine(Transform tr, Vector3 startScale,Vector3 targetScale, float duration, bool loop=true)
     {
-        Vector3 startScale = tr.localScale;
+        
         float time = 0f;
 
         while (time < duration)

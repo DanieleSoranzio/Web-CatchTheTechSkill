@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eb54221131c91f4f90ca29568fca2f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolSize: 10
+  PoolSize: 5
   Max_PoolSize: 0
   particlePos: {x: 0, y: 0, z: 0}
 --- !u!198 &920753931187630635

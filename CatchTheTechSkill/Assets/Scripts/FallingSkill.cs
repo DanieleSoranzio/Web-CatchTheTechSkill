@@ -14,6 +14,7 @@ public class FallingSkill : Poolable
     //Components
     SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
+    Collider2D coll;
     
     #region Mono
 
@@ -21,11 +22,13 @@ public class FallingSkill : Poolable
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        coll = GetComponent<Collider2D>();
     }
 
     private void OnEnable()
     {
         EventManager.OnGameOver += GetBackToPool;
+        coll.enabled = true;
     }
 
     private void OnDisable()
@@ -40,6 +43,7 @@ public class FallingSkill : Poolable
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        coll.enabled = false;
         if (other.gameObject.CompareTag("Finish"))
         {
             if (isCatchable)
@@ -64,7 +68,7 @@ public class FallingSkill : Poolable
                     particle.PlayParticleEffect();
                 }
             }
-               
+            ReturnToPool();
         }
 
         if (other.gameObject.CompareTag(("Player")))
@@ -73,8 +77,10 @@ public class FallingSkill : Poolable
                 EventManager.OnSkillCatch?.Invoke();
             else
                 EventManager.OnSkillFelt?.Invoke();
+            
+            ReturnToPool();
         }
-        ReturnToPool();
+        
     }
     #endregion
     
@@ -83,8 +89,9 @@ public class FallingSkill : Poolable
     [Tooltip("Set a new skills data to the object, changing sprite and catchable boolean.")]
     public void SetData(SkillsData newData)
     {
-        spriteRenderer.sprite = newData.sprite;
-        isCatchable = newData.isCatchable;
+        data = newData;
+        spriteRenderer.sprite = data.sprite;
+        isCatchable = data.isCatchable;
     }
 
     public void SetMovementSpeed(float movementSpeed)

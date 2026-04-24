@@ -59,7 +59,6 @@ public class ObjectPooler : Singleton<ObjectPooler>
 
      private void RegeneratePool(Poolable poolable)
      {
-
          if (objectsPool.ContainsKey(poolable))
          {
              int PoolSize = poolable.PoolSize;   

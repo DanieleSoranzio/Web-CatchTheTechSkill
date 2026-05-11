@@ -14,6 +14,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] TextMeshProUGUI playerLivesText;
     [SerializeField] CanvasGroup textCanvasGroup;
     [SerializeField] private Vector3 startPos;
+    [SerializeField] private RectTransform centerPosition;
     private Vector3 startScale;
 
     private int playerScore;
@@ -78,7 +79,7 @@ public class UIHandler : MonoBehaviour
     
     private void OnGameLost()
     {
-        playerScoreText.rectTransform.AnimatePosition(this,Vector3.zero,1f,false);
+        playerScoreText.rectTransform.AnimatePosition(this,centerPosition.transform.position,1f);
         playerScoreText.rectTransform.AnimateScale(this,startScale,startScale*2f,1f,false);
     }
     private void OnSkillFelt()
